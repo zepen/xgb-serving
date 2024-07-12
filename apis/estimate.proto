@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package estimate.server;
+
+option cc_enable_arenas = true;
+
+service Estimator {
+  rpc EstimatorResp (EstimateRequest) returns (EstimateResponse);
+}
+
+message UserFeatures {
+  uint64 userId = 1;
+  map<string, string> features = 2;
+}
+
+message NoteFeatures {
+  uint64 noteId = 1;
+  map<string, string> features = 2;
+}
+
+message EstimateRequest {
+  UserFeatures uf = 1;
+  repeated NoteFeatures nf = 2;
+}
+
+message EstimateResponse {
+  map<uint64, float> outputs = 1;
+}
